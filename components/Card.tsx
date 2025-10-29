@@ -7,6 +7,8 @@ export default function ProductCard({ product }: { product: any }) {
   const { addToCart } = useCartStore();
   const { toggleWishlist, isInWishlist } = useWishlistStore();
 
+  const inWishlist = isInWishlist(product.id);
+
   return (
     <div className="border rounded-lg p-4 flex flex-col justify-between shadow-md hover:shadow-lg transition">
       <img
@@ -32,10 +34,10 @@ export default function ProductCard({ product }: { product: any }) {
 
         <button
           onClick={() => toggleWishlist(product)}
-          className={`px-3 py-1 rounded-md border ${
-            isInWishlist(product.id)
-              ? "bg-pink-500 text-white"
-              : "text-pink-500 border-pink-500"
+          className={`px-3 py-1 rounded-md border transition-colors duration-200 ${
+            inWishlist
+              ? "bg-pink-500 text-white border-pink-500"
+              : "bg-white text-pink-500 border-pink-500"
           }`}
         >
           ♥
