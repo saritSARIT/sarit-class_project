@@ -15,8 +15,9 @@ export async function getCategories() {
   return res.json();
 }
 
+
 export async function getProductsByCategory(category: string) {
-  const encoded = encodeURIComponent(category);
-  const res = await fetch(`${BASE_URL}/products/category/${encoded}`);
+ const res = await fetch(`${BASE_URL}/products/category/${category}`, { cache: "force-cache" });
+  if (!res.ok) throw new Error(`Failed to load products for ${category}`);
   return res.json();
 }

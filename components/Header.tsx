@@ -12,13 +12,12 @@ const Header: React.FC<HeaderProps> = ({ }) => {
 
                 <nav className="flex items-center gap-4">
                     <Link href="/">Home</Link>
-                    <Link href={`/Category?category=${encodeURIComponent("men's clothing")}`}>Mens</Link>
-                    <Link href={`/Category?category=${encodeURIComponent("women's clothing")}`}>Womens</Link>
-                    <Link href={`/Category?category=${encodeURIComponent('jewelery')}`}>Jewelery</Link>
-                    <Link href={`/Category?category=${encodeURIComponent('electronics')}`}>Electronics</Link>
+                    <Link href={`/category?category=${encodeURIComponent("men's clothing")}`}>Mens</Link>
+                    <Link href={`/category?category=${encodeURIComponent("women's clothing")}`}>Womens</Link>
+                    <Link href={`/category?category=${encodeURIComponent('jewelery')}`}>Jewelery</Link>
+                    <Link href={`/category?category=${encodeURIComponent('electronics')}`}>Electronics</Link>
                 </nav>
             </div>
-
             <div className="flex items-center gap-4">
                 <Link href="/Cart">Cart()</Link>
                 <Link href="/Wish-list">♥</Link>
