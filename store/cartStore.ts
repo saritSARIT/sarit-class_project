@@ -10,30 +10,66 @@ interface CartItem {
 
 interface CartState {
   cart: CartItem[];
-  addToCart: (product: any) => void;
+
+  
+  addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
+  updateQuantity: (id: number, quantity: number) => void;
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
   clearCart: () => void;
 }
 
-export const useCartStore = create<CartState>((set, get) => ({
+export const useCartStore = create<CartState>((set) => ({
   cart: [],
-  addToCart: (product) => {
-    const existing = get().cart.find((p) => p.id === product.id);
-    if (existing) {
-      
-      set({
-        cart: get().cart.map((p) =>
-          p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
-        ),
-      });
-    } else {
-    
-      set({
-        cart: [...get().cart, { ...product, quantity: 1 }],
-      });
-    }
-  },
+
+
+  addToCart: (item) =>
+    set((state) => {
+      const existing = state.cart.find((i) => i.id === item.id);
+      if (existing) {
+        return {
+          cart: state.cart.map((i) =>
+            i.id === item.id
+              ? { ...i, quantity: i.quantity + item.quantity }
+              : i
+          ),
+        };
+      } else {
+        return { cart: [...state.cart, { ...item, quantity: 1 }] };
+      }
+    }),
+
+ 
   removeFromCart: (id) =>
-    set({ cart: get().cart.filter((p) => p.id !== id) }),
+    set((state) => ({
+      cart: state.cart.filter((item) => item.id !== id),
+    })),
+
+  
+  updateQuantity: (id, quantity) =>
+    set((state) => ({
+      cart: state.cart.map((item) =>
+        item.id === id ? { ...item, quantity } : item
+      ),
+    })),
+
+ 
+  increaseQuantity: (id) =>
+    set((state) => ({
+      cart: state.cart.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      ),
+    })),
+
+  decreaseQuantity: (id) =>
+    set((state) => ({
+      cart: state.cart.map((item) =>
+        item.id === id
+          ? { ...item, quantity: Math.max(1, item.quantity - 1) }
+          : item
+      ),
+    })),
+
   clearCart: () => set({ cart: [] }),
 }));
